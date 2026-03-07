@@ -1943,7 +1943,7 @@ int main(int argc, char **argv)
                     pc += sext11(instr & 0b11111111111);
                 } else {
                     /* R */
-                    pc += (int16_t)registers[(instr & (0b111 << 6)) >> 6];
+                    pc = memory + (uint16_t)registers[(instr & (0b111 << 6)) >> 6];
                 }
                 break;
             }
