@@ -1843,6 +1843,7 @@ int main(int argc, char **argv)
     /* terminate the emulator if clock gets disabled */
     while (memory[OS_MCR] & (1u << 15))
     {
+        if (check_user_address(memory[OS_PSR], pc - memory)) interrupt(memory, registers, &pc, 0x2);
         uint16_t instr = *pc;
         pc++;
 
@@ -1925,7 +1926,7 @@ int main(int argc, char **argv)
             }
             case 0b1100: /* JMP */
             {
-                pc = memory + (int16_t)registers[(instr & (0b111 << 6)) >> 6];
+                pc = memory + registers[(instr & (0b111 << 6)) >> 6];
                 break;
             }
             case 0b0000: /* BR */
